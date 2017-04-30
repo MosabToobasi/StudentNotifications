@@ -38,6 +38,6 @@ public void inputDat(View view) {
         //Toast.makeText(this, "fjsaja", Toast.LENGTH_LONG).show();
     }
 
-}
+}//ahmad
 }
 
