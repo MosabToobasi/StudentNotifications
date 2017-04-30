@@ -27,6 +27,7 @@ public class Login extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //welcome home
                 final EditText id = (EditText) findViewById(R.id.Id);
                 final EditText pass = (EditText) findViewById(R.id.Password);
                 String s = id.getText().toString();

@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import util.SharedPrefHelper;
+
 public class Teacher extends AppCompatActivity {
 
     /**
@@ -120,6 +122,9 @@ public class Teacher extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.marks, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int id = SharedPrefHelper.getIntSharedPref(getContext(),"ID",getContext().MODE_PRIVATE);
+            String user = SharedPrefHelper.getStringSharedPref(getContext(),"USERNAME",getContext().MODE_PRIVATE);
+            textView.setText(user+" id : "+id);
             return rootView;
         }
     }
