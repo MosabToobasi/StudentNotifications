@@ -1,5 +1,10 @@
 package com.example.mosabtoobasi.studentnotifications;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,12 +16,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import util.SharedPrefHelper;
@@ -120,11 +128,91 @@ public class Teacher extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.marks, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            int id = SharedPrefHelper.getIntSharedPref(getContext(),"ID",getContext().MODE_PRIVATE);
-            String user = SharedPrefHelper.getStringSharedPref(getContext(),"USERNAME",getContext().MODE_PRIVATE);
-            textView.setText(user+" id : "+id);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //int id = SharedPrefHelper.getIntSharedPref(getContext(),"ID",getContext().MODE_PRIVATE);
+           // String user = SharedPrefHelper.getStringSharedPref(getContext(),"USERNAME",getContext().MODE_PRIVATE);
+           // textView.setText(user+" id : "+id);
+            Context context;
+            context=getContext();
+            // Create DatabaseHelper instance
+            DatabaseHelper dataHelper=new DatabaseHelper(context);
+            // Reference to TableLayout
+
+            TableLayout tableLayout=(TableLayout)rootView.findViewById(R.id.Tablelayout);
+            // Add header row
+            TableRow rowHeader = new TableRow(context);
+            rowHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
+            rowHeader.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT));
+            String[] headerText={"Course","Exam","Mark","Mark From"};
+            for(String c:headerText) {
+                TextView tv = new TextView(getContext());
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tv.setGravity(Gravity.CENTER);
+                tv.setTextSize(18);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setText(c);
+                rowHeader.addView(tv);
+            }
+            tableLayout.addView(rowHeader);
+
+            // Get data from sqlite database and add them to the table
+            // Open the database for reading
+            SQLiteDatabase db = dataHelper.getReadableDatabase();
+            // Start the transaction.
+            db.beginTransaction();
+
+            try
+            {
+                String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;
+                Cursor cursor = db.rawQuery(selectQuery,null);
+                if(cursor.getCount() >0)
+                {
+                    while (cursor.moveToNext()) {
+                        // Read columns data
+                        String outlet_course_name= cursor.getString(cursor.getColumnIndex("outlet_course_name"));
+                        String outlet_exam= cursor.getString(cursor.getColumnIndex("outlet_exam"));
+                        String outlet_mark= cursor.getString(cursor.getColumnIndex("outlet_mark"));
+                        String outlet_mark_from= cursor.getString(cursor.getColumnIndex("outlet_mark_from"));
+
+                        // dara rows
+                        TableRow row = new TableRow(context);
+                        row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                                TableLayout.LayoutParams.WRAP_CONTENT));
+                        String[] colText={outlet_course_name,outlet_exam,outlet_mark,outlet_mark_from};
+                        for(String text:colText) {
+                            TextView tv = new TextView(getContext());
+                            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                                    TableRow.LayoutParams.WRAP_CONTENT));
+                            tv.setGravity(Gravity.CENTER);
+                            tv.setTextSize(16);
+                            tv.setPadding(5, 5, 5, 5);
+                            tv.setText(text);
+                            row.addView(tv);
+                        }
+                        tableLayout.addView(row);
+
+                    }
+
+                }
+                db.setTransactionSuccessful();
+
+            }
+            catch (SQLiteException e)
+            {
+                e.printStackTrace();
+
+            }
+            finally
+            {
+                db.endTransaction();
+                // End the transaction.
+                db.close();
+                // Close database
+            }
+
             return rootView;
         }
     }
@@ -196,6 +284,83 @@ public class Teacher extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.mark3, container, false);
+             Context context;
+            context=getContext();
+            // Create DatabaseHelper instance
+            DatabaseHelper1 dataHelper=new DatabaseHelper1(context);
+            // Reference to TableLayout
+
+            TableLayout tableLayout=(TableLayout)rootView.findViewById(R.id.Tablelayout1);
+            // Add header row
+            TableRow rowHeader = new TableRow(context);
+            rowHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
+            rowHeader.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT));
+            String[] headerText={"NAME","LECTURER","ABSENCE",};
+            for(String c:headerText) {
+                TextView tv = new TextView(getContext());
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tv.setGravity(Gravity.CENTER);
+                tv.setTextSize(18);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setText(c);
+                rowHeader.addView(tv);
+            }
+            tableLayout.addView(rowHeader);
+
+            // Get data from sqlite database and add them to the table
+            // Open the database for reading
+            SQLiteDatabase db = dataHelper.getReadableDatabase();
+            // Start the transaction.
+            db.beginTransaction();
+
+            try
+            {
+                String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;
+                Cursor cursor = db.rawQuery(selectQuery,null);
+                if(cursor.getCount() >0)
+                {
+                    while (cursor.moveToNext()) {
+                        // Read columns data
+                        String outlet_name= cursor.getString(cursor.getColumnIndex("outlet_name"));
+                        String outlet_lecturer= cursor.getString(cursor.getColumnIndex("outlet_lecturer"));
+                        String outlet_absence= cursor.getString(cursor.getColumnIndex("outlet_absence"));
+                        // dara rows
+                        TableRow row = new TableRow(context);
+                        row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                                TableLayout.LayoutParams.WRAP_CONTENT));
+                        String[] colText={outlet_name,outlet_lecturer,outlet_absence};
+                        for(String text:colText) {
+                            TextView tv = new TextView(getContext());
+                            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                                    TableRow.LayoutParams.WRAP_CONTENT));
+                            tv.setGravity(Gravity.CENTER);
+                            tv.setTextSize(16);
+                            tv.setPadding(5, 5, 5, 5);
+                            tv.setText(text);
+                            row.addView(tv);
+                        }
+                        tableLayout.addView(row);
+
+                    }
+
+                }
+                db.setTransactionSuccessful();
+
+            }
+            catch (SQLiteException e)
+            {
+                e.printStackTrace();
+
+            }
+            finally
+            {
+                db.endTransaction();
+                // End the transaction.
+                db.close();
+                // Close database
+            }
             return rootView;
 
 
