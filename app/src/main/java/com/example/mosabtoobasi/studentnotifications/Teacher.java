@@ -46,9 +46,15 @@ public class Teacher extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.student);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,6 +78,11 @@ public class Teacher extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+
+
+
 
     }
 
