@@ -51,12 +51,12 @@ public class Login extends AppCompatActivity {
                                     sh.setSharePref(getBaseContext(),"ID",response.getInt("ID"),getBaseContext().MODE_PRIVATE);
                                     sh.setSharePref(getBaseContext(),"USERNAME",response.getString("T_USERNAME"),getBaseContext().MODE_PRIVATE);
                                     sh.setSharePref(getBaseContext(),"type","TEACHER",getBaseContext().MODE_PRIVATE);
-                                    Intent i = new Intent(Login.this, Teacher.class);
+                                    Intent i = new Intent(Login.this, teacherahmad.class);
                                     startActivity(i);
                                     finish();
                                 }
                                 catch(JSONException ex){
-
+                                    ex.printStackTrace();
                                 }
                             }
                         }, new Response.ErrorListener() {
