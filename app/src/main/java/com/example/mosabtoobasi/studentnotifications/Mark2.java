@@ -13,24 +13,29 @@ import android.widget.Toast;
 public class Mark2 extends AppCompatActivity {
 
     DataBaseHelperahmaddaraghmeh myDb;
-    final Button A= (Button) findViewById(R.id.Saveformmark);
+final Button A=(Button) findViewById(R.id.Saveformmark);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacherahmad);
+        setContentView(R.layout.mark2);
         int curent_teacher_id=1;
-
         myDb=new  DataBaseHelperahmaddaraghmeh(this);
-      final   int x= myDb.getcourses();
+        final   int x= myDb.getcourses();
 
+
+
+    A.setOnClickListener(new View.OnClickListener(){
+
+
+                             @Override
+                             public void onClick(View v) {Toast.makeText(Mark2.this,x,Toast.LENGTH_LONG).show();}});
 ///////////////
-        A.setOnClickListener(new View.OnClickListener() {
-                                 @Override
-                                 public void onClick(View v) {
-                                     Toast.makeText(Mark2.this,x,Toast.LENGTH_LONG).show();
-                                 }
-                             }
-        );
+///
+
+
+
+
+
         //ملاحظه الجمل اللي ت
             // حت في الكمنت استخدمها مره وحده عشان يصير في داتا في اللوكال
        /* x=myDb.insertstudent("ahmad");
@@ -61,7 +66,6 @@ public class Mark2 extends AppCompatActivity {
         x=myDb.addclassandcoursetoteacher(2,2,2);
 */
     }
-
 
 
 }
