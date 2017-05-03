@@ -53,10 +53,10 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+teacher_table+" (tid integer primary key autoincrement,tname text)");
-        db.execSQL("create table "+student_table+" (sid integer primary key autoincrement,sname text)");
-        db.execSQL("create table "+class_table+" (classid integer primary key autoincrement,classname text)");
-        db.execSQL("create table "+course_table+" (cid integer primary key autoincrement,cname text)");
+        db.execSQL("create table "+teacher_table+" (tid integer primary key,tname text)");
+        db.execSQL("create table "+student_table+" (sid integer primary key,sname text)");
+        db.execSQL("create table "+class_table+" (classid integer primary key,classname text)");
+        db.execSQL("create table "+course_table+" (cid integer primary key,cname text)");
         db.execSQL("create table "+studentcourse_table+" (c2id integer,s2id integer,exam1 integer,exam2 integer,quizes integer,FOREIGN KEY(c2id) REFERENCES coursetable(cid),FOREIGN KEY(s2id) REFERENCES studenttable(sid))");
         db.execSQL("create table "+studentclass_table+" (fclassid integer,s2id integer,FOREIGN KEY(fclassid) REFERENCES classtable(classid),FOREIGN KEY(s2id) REFERENCES studenttable(sid))");
         db.execSQL("create table "+teachercoursclass_table+" (ftid integer,fcid integer,fclassid integer,FOREIGN KEY(ftid) REFERENCES teachertable(tid),FOREIGN KEY(fcid) REFERENCES coursetable(cid),FOREIGN KEY(fclassid) REFERENCES classtable(classid))");
@@ -74,38 +74,42 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public  boolean insertteacher(String name)
+    public  boolean insertteacher(String name,int value)
 {
     ContentValues cv=new ContentValues();
     SQLiteDatabase db=this.getWritableDatabase();
     cv.put(t_name,name);
+    cv.put(t_id,value);
     long result=db.insert(teacher_table,null,cv);
     if(result==-1){return false;}
     else {return true;}
 }
-    public  boolean insertstudent(String name)
+    public  boolean insertstudent(String name,int value)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
         cv.put(s_name,name);
+        cv.put(s_id,value);
         long result=db.insert(student_table,null,cv);
         if(result==-1){return false;}
         else {return true;}
     }
-    public  boolean insertclass(String name)
+    public  boolean insertclass(String name,int value)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
         cv.put(class_name,name);
+        cv.put(class_id,value);
         long result=db.insert(class_table,null,cv);
         if(result==-1){return false;}
         else {return true;}
     }
-    public  boolean insertcourse(String name)
+    public  boolean insertcourse(String name,int value)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
         cv.put(c_name,name);
+        cv.put(c_id,value);
         long result=db.insert(course_table,null,cv);
         if(result==-1){return false;}
         else {return true;}
