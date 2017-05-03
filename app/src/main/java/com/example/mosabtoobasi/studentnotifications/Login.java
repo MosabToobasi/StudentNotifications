@@ -45,17 +45,16 @@ public class Login extends AppCompatActivity {
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
                                 SharedPrefHelper sh = new SharedPrefHelper();
-                                try{
-                                    sh.setSharePref(getBaseContext(),"ID",response.getInt("ID"),getBaseContext().MODE_PRIVATE);
-                                    sh.setSharePref(getBaseContext(),"USERNAME",response.getString("T_USERNAME"),getBaseContext().MODE_PRIVATE);
-                                    sh.setSharePref(getBaseContext(),"type","TEACHER",getBaseContext().MODE_PRIVATE);
-                                    Intent i = new Intent(Login.this, teacherahmad.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                                catch(JSONException ex){
+                                try {
+                                    sh.setSharePref(getBaseContext(), "ID", response.getInt("ID"), getBaseContext().MODE_PRIVATE);
+                                    sh.setSharePref(getBaseContext(), "USERNAME", response.getString("T_USERNAME"), getBaseContext().MODE_PRIVATE);
+                                    sh.setSharePref(getBaseContext(), "type", "TEACHER", getBaseContext().MODE_PRIVATE);
+                                    //Intent i = new Intent(Login.this, Teacher.class);
+                                    //startActivity(i);
+                                    //finish();
+                                } catch (JSONException ex) {
                                     ex.printStackTrace();
                                 }
                             }
@@ -69,10 +68,47 @@ public class Login extends AppCompatActivity {
                             }
                         });
                 queue.add(jsObjRequest);
+                if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_APPEND) != 0) {
+                    JsonObjectRequest jsObjRequest1 = new JsonObjectRequest
+                            (Request.Method.POST, url + "tclass", para, new Response.Listener<JSONObject>() {
+
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    //Toast.makeText(getBaseContext(), "" + response.length(), Toast.LENGTH_LONG).show();
+                                    String name = SharedPrefHelper.getStringSharedPref(getBaseContext(),"USERNAME",getBaseContext().MODE_PRIVATE);
+                                    int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(),"ID",getBaseContext().MODE_PRIVATE);
+                                    DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
+                                    db.insertteacher(name,Tid);
+                                    for (int i=1;i<=response.length()/4;i++) {
+                                        try {
+                                            int clid = response.getInt("CL_ID" + i);
+                                            int coid = response.getInt("CO_ID" + i);
+                                            String cn = response.getString("CL_NM"+i);
+                                            String con = response.getString("CO_NM"+i);
+
+                                        }
+                                        catch (JSONException e){
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // TODO Auto-generated method stub
+                                    Log.d("error", error.getMessage());
+                                    //Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                                }
+
+                            });
+                    queue.add(jsObjRequest1);
+                }
+
+
+
             }
-
         });
-
     }
 public void inputDat(View view) {
     final EditText id = (EditText) findViewById(R.id.Id);
