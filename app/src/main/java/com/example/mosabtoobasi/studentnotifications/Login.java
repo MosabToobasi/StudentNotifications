@@ -85,12 +85,18 @@ public class Login extends AppCompatActivity {
                                             int coid = response.getInt("CO_ID" + i);
                                             String cn = response.getString("CL_NM"+i);
                                             String con = response.getString("CO_NM"+i);
-
+                                            db.insertclass(cn,clid);
+                                            db.insertcourse(con,coid);
+                                            db.addclassandcoursetoteacher(Tid,clid,coid);
+                                            //Toast.makeText(getBaseContext(), "" + clid + " "+coid, Toast.LENGTH_SHORT).show();
                                         }
                                         catch (JSONException e){
                                             e.printStackTrace();
                                         }
                                     }
+                                    Intent i = new Intent(Login.this, Teacher.class);
+                                    startActivity(i);
+                                    finish();
                                 }
                             }, new Response.ErrorListener() {
 
