@@ -174,4 +174,59 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         else {return  false;}
     }
 
+
+    public  void insertmarkone(int courseid,int studentid,int mark)
+    {
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db=this.getWritableDatabase();
+        cv.put(s2_id,studentid);
+        cv.put(course2_id,courseid);
+        cv.put(exam1,mark);
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+exam1+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
+    }
+
+
+    public  void insertmarktwo(int courseid,int studentid,int mark)
+    {
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db=this.getWritableDatabase();
+        cv.put(s2_id,studentid);
+        cv.put(course2_id,courseid);
+        cv.put(exam2,mark);
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+exam2+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
+    }
+    public  void insertmarkquizes(int courseid,int studentid,int mark)
+    {
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db=this.getWritableDatabase();
+        cv.put(s2_id,studentid);
+        cv.put(course2_id,courseid);
+        cv.put(quizes,mark);
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
+    }
+
+    public int getcourses()
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+c_name+"FROM "+course_table;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+      int count=0,i2=0;
+       for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
