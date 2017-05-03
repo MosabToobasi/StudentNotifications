@@ -9,16 +9,112 @@
     tools:context="com.example.mosabtoobasi.studentnotifications.Student$PlaceholderFragment">
 
     <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Exam2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/Exam1"
+        android:text="إمتحان يومي "
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="إمتحان نهائي"
+        android:textSize="24sp"
+        android:layout_alignTop="@+id/Quizes"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/Quizes" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Exam2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/Exam1"
+        android:text="إمتحان يومي "
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/StudentSpiner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:layout_below="@+id/spinner2"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:id="@+id/CSpiner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/Saveformmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Save" />
+
+    <EditText
+        android:id="@+id/Exam1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        android:layout_below="@+id/StudentSpiner"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/Exam2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Exam1"
+        android:layout_marginTop="26dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0" />
+
+    <EditText
+        android:id="@+id/Quizes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Exam2"
+        android:layout_marginTop="43dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0" />
+
     <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_toEndOf="@+id/section_label"
-        android:layout_marginStart="121dp"
-        android:id="@+id/textView2" />
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Exam2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/Exam2"
+        android:text="إمتحان شهرين"
+        android:textSize="24sp" />
 
 </RelativeLayout>

@@ -140,46 +140,13 @@ public class Student extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             //t =(TextView)view.findViewById(R.id.textView1);
         }
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment2 newInstance(int sectionNumber) {
-            PlaceholderFragment2 fragment = new PlaceholderFragment2();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.mark2, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-
-    //frag33
-    public static class PlaceholderFragment3 extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment3() {
-        }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment3 newInstance(int sectionNumber) {
-            PlaceholderFragment3 fragment = new PlaceholderFragment3();
+        public static Teacher.PlaceholderFragment2 newInstance(int sectionNumber) {
+            Teacher.PlaceholderFragment2 fragment = new Teacher.PlaceholderFragment2();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -190,20 +157,10 @@ public class Student extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.mark3, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
-
-
         }
-
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-          TextView  t =(TextView)view.findViewById(R.id.section_label);
-       t.setText("musab");
-        }
-
-     //   public void onViewCreating ;
     }
 
     /**
@@ -223,11 +180,6 @@ public class Student extends AppCompatActivity {
             switch (position){
           case 0:
             return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
-                case 1:
-                    return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
-                case 2:
-
-                    return PlaceholderFragment3.newInstance(position + 1);//return whic frag is called
                 default:
 
                     return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
@@ -236,19 +188,18 @@ public class Student extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {//name of frag
             switch (position) {
                 case 0:
-                    return "Marks";
+                    return "إظهار العلامات ";
                 case 1:
-                    return "Mark2";
-                case 2:
-                    return "Mark3";
+                    return "إظهار الغيابات  ";
+
             }
             return null;
         }

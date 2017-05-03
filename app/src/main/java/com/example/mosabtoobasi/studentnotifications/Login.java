@@ -116,6 +116,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 public void inputDat(View view) {
     final EditText id = (EditText) findViewById(R.id.Id);
     final EditText pass = (EditText) findViewById(R.id.Password);
@@ -125,8 +126,8 @@ public void inputDat(View view) {
     String e = pass.getText().toString();
     System.out.println(s);
 
-    if (s.compareTo("123456") == 0 && e.compareTo("000000") == 0) {
-        //Intent i = new Intent(Login.this, Student.class);
+   if (s.compareTo("123456") == 0 && e.compareTo("000000") == 0) {
+       //Intent i = new Intent(Login.this, Student.class);
         //startActivity(i);
        // finish();
         Intent intent = new Intent(this, Teacher.class);
@@ -137,7 +138,7 @@ public void inputDat(View view) {
         startActivity(intent);
 
         //Toast.makeText(this, "fjsaja", Toast.LENGTH_LONG).show();
-    }
+   }
 }
 }
 

@@ -267,213 +267,6 @@ public class Teacher extends AppCompatActivity {
         }
     }
 
-
-    //frag33
-    public static class PlaceholderFragment3 extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment3() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment3 newInstance(int sectionNumber) {
-            PlaceholderFragment3 fragment = new PlaceholderFragment3();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.mark3, container, false);
-             Context context;
-            context=getContext();
-            // Create DatabaseHelper instance
-            DatabaseHelper1 dataHelper=new DatabaseHelper1(context);
-            // Reference to TableLayout
-
-            TableLayout tableLayout=(TableLayout)rootView.findViewById(R.id.Tablelayout1);
-            // Add header row
-            TableRow rowHeader = new TableRow(context);
-            rowHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
-            rowHeader.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-            String[] headerText={"NAME","LECTURER","ABSENCE",};
-            for(String c:headerText) {
-                TextView tv = new TextView(getContext());
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
-                tv.setGravity(Gravity.CENTER);
-                tv.setTextSize(18);
-                tv.setPadding(5, 5, 5, 5);
-                tv.setText(c);
-                rowHeader.addView(tv);
-            }
-            tableLayout.addView(rowHeader);
-
-            // Get data from sqlite database and add them to the table
-            // Open the database for reading
-            SQLiteDatabase db = dataHelper.getReadableDatabase();
-            // Start the transaction.
-            db.beginTransaction();
-
-            try
-            {
-                String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;
-                Cursor cursor = db.rawQuery(selectQuery,null);
-                if(cursor.getCount() >0)
-                {
-                    while (cursor.moveToNext()) {
-                        // Read columns data
-                        String outlet_name= cursor.getString(cursor.getColumnIndex("outlet_name"));
-                        String outlet_lecturer= cursor.getString(cursor.getColumnIndex("outlet_lecturer"));
-                        String outlet_absence= cursor.getString(cursor.getColumnIndex("outlet_absence"));
-                        // dara rows
-                        TableRow row = new TableRow(context);
-                        row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                                TableLayout.LayoutParams.WRAP_CONTENT));
-                        String[] colText={outlet_name,outlet_lecturer,outlet_absence};
-                        for(String text:colText) {
-                            TextView tv = new TextView(getContext());
-                            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                                    TableRow.LayoutParams.WRAP_CONTENT));
-                            tv.setGravity(Gravity.CENTER);
-                            tv.setTextSize(16);
-                            tv.setPadding(5, 5, 5, 5);
-                            tv.setText(text);
-                            row.addView(tv);
-                        }
-                        tableLayout.addView(row);
-
-                    }
-
-                }
-                db.setTransactionSuccessful();
-
-            }
-            catch (SQLiteException e)
-            {
-                e.printStackTrace();
-
-            }
-            finally
-            {
-                db.endTransaction();
-                // End the transaction.
-                db.close();
-                // Close database
-            }
-            return rootView;
-
-
-        }
-
-
-        }
-
-
-        //frag4
-        public static class PlaceholderFragment4 extends Fragment {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
-            private static final String ARG_SECTION_NUMBER = "section_number";
-
-            public PlaceholderFragment4() {
-            }
-
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
-            public static PlaceholderFragment4 newInstance(int sectionNumber) {
-                PlaceholderFragment4 fragment = new PlaceholderFragment4();
-                Bundle args = new Bundle();
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-                fragment.setArguments(args);
-                return fragment;
-            }
-
-            @Override
-            public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                     Bundle savedInstanceState) {
-                View rootView = inflater.inflate(R.layout.mark4, container, false);
-                return rootView;
-
-
-            }
-
-
-            @Override
-            public void onViewCreated(View view, Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                TextView  t =(TextView)view.findViewById(R.id.section_label);
-                t.setText("this is a section 4");
-            }
-
-            //   public void onViewCreating ;
-        }
-
-
-
-
-    //frag 5
-    public static class PlaceholderFragment5 extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment5() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment5 newInstance(int sectionNumber) {
-            PlaceholderFragment5 fragment = new PlaceholderFragment5();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.mark5, container, false);
-            return rootView;
-
-
-        }
-
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            TextView  t =(TextView)view.findViewById(R.id.section_label);
-            t.setText("this is a section 5 ");
-        }
-
-        //   public void onViewCreating ;
-    }
-
-
-
-
-
 /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -494,40 +287,34 @@ public class Teacher extends AppCompatActivity {
                 case 1:
                     return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
                 case 2:
-
-                    return PlaceholderFragment3.newInstance(position + 1);//return whic frag is called
-
+                    return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
                 case 3:
-
-                    return PlaceholderFragment4.newInstance(position + 1);//return whic frag is called
-                case 4:
-
-                    return PlaceholderFragment5.newInstance(position + 1);//return whic frag is called
+                    return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
                 default:
-
                     return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
             }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 5;
+            // Show  2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {//name of frag
             switch (position) {
                 case 0:
-                    return "Marks";
+                    return "إظهار العلامات ";
                 case 1:
-                    return "Mark2";
+                    return "إدخال العلامات ";
                 case 2:
-                    return "Mark3";
+                    return "إظهار الغيابات  ";
                 case 3:
-                    return "Mark4";
-                case 4:
-                    return "Mark5";
+                    return "إدخال الغيابات  ";
+
+
+
             }
             return null;
         }
