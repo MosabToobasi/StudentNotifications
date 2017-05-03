@@ -160,7 +160,8 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
             return true;
         }
     }
-
+// hoooerw rkwe;r klwe; r/.wel ,r.ew Rew,'; rew rwe
+    //fdsfdsfdsfd
     public  boolean isfull(int teacherid,int classid,int courseid )
     {
         SQLiteDatabase db=this.getWritableDatabase();

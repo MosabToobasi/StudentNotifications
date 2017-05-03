@@ -18,7 +18,7 @@ public class teacherahmad extends AppCompatActivity {
        boolean x;
         Toast.makeText(teacherahmad.this,"ahmad not inserted",Toast.LENGTH_LONG).show();
      //ملاحظه الجمل اللي تحت في الكمنت استخدمها مره وحده عشان يصير في داتا في اللوكال
-        x=myDb.insertstudent("ahmad");
+       /* x=myDb.insertstudent("ahmad");
         x=myDb.insertstudent("ali");
         x=myDb.insertstudent("mohammad");
         x=myDb.insertstudent("omar");
@@ -44,7 +44,7 @@ public class teacherahmad extends AppCompatActivity {
         x=myDb.addclassandcoursetoteacher(2,1,2);
         x=myDb.addclassandcoursetoteacher(1,2,1);
         x=myDb.addclassandcoursetoteacher(2,2,2);
-
+*/
     }
 
 
