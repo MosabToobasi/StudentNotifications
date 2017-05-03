@@ -208,7 +208,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     public int getcourses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT "+c_name+"FROM "+course_table;
+        String selectQuery = "SELECT "+c_name+" FROM "+course_table;
         Cursor cursor =db.rawQuery(selectQuery,null);
       int count=0,i2=0;
        for (i2=-0;i2<cursor.getCount();i2++)

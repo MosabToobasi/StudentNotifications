@@ -28,7 +28,7 @@ final Button A=(Button) findViewById(R.id.Saveformmark);
 
 
                              @Override
-                             public void onClick(View v) {Toast.makeText(Mark2.this,x,Toast.LENGTH_LONG).show();}});
+                             public void onClick(View v) {Toast.makeText(Mark2.this,""+x,Toast.LENGTH_LONG).show();}});
 ///////////////
 ///
 
