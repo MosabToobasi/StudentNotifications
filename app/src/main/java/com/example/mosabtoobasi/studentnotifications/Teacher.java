@@ -261,11 +261,86 @@ public class Teacher extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.mark2, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
     }
+
+
+    //frag3
+    public static class PlaceholderFragment3 extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment3() {
+        }
+
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            //t =(TextView)view.findViewById(R.id.textView1);
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment3 newInstance(int sectionNumber) {
+            PlaceholderFragment3 fragment = new PlaceholderFragment3();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.mark3, container, false);
+
+            return rootView;
+        }
+    }
+
+    //frag4
+    public static class PlaceholderFragment4 extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment4() {
+        }
+
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            //t =(TextView)view.findViewById(R.id.textView1);
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment4 newInstance(int sectionNumber) {
+            PlaceholderFragment4 fragment = new PlaceholderFragment4();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.mark4, container, false);
+
+            return rootView;
+        }
+    }
+
 
 /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -297,8 +372,8 @@ public class Teacher extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show  2 total pages.
-            return 2;
+            // Show  4 total pages.
+            return 4;
         }
 
         @Override

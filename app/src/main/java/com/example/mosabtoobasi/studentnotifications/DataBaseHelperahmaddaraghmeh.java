@@ -165,7 +165,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     public  boolean isfull()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;
+        String selectQuery = "SELECT * FROM "+ teacher_table;
         Cursor cursor =db.rawQuery(selectQuery,null);
         if(cursor.getCount() >0)
         {

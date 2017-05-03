@@ -24,6 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void onCreate(SQLiteDatabase db) {
 
+
+
         db.execSQL(CREATE_TABLE_OUTLET);
 
     }
