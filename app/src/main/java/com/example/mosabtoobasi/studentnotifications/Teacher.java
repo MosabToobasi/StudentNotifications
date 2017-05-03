@@ -23,9 +23,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import util.SharedPrefHelper;
 
@@ -261,7 +263,19 @@ public class Teacher extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.mark2, container, false);
+            Button A=(Button) rootView.findViewById(R.id.Saveformmark);
+            int curent_teacher_id=1;
+            DataBaseHelperahmaddaraghmeh myDb=new  DataBaseHelperahmaddaraghmeh(getContext());
+            final   int x= myDb.getcourses();
 
+
+
+            A.setOnClickListener(new View.OnClickListener(){
+
+
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),x,Toast.LENGTH_LONG).show();}});
             return rootView;
         }
     }
