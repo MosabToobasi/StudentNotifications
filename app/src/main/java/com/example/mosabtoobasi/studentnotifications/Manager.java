@@ -161,48 +161,6 @@ public class Manager extends AppCompatActivity {
     }
 
 
-    //frag33
-    public static class PlaceholderFragment3 extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment3() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment3 newInstance(int sectionNumber) {
-            PlaceholderFragment3 fragment = new PlaceholderFragment3();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.mark3, container, false);
-            return rootView;
-
-
-        }
-
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-          TextView  t =(TextView)view.findViewById(R.id.section_label);
-       t.setText("musab");
-        }
-
-     //   public void onViewCreating ;
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -223,9 +181,6 @@ public class Manager extends AppCompatActivity {
             return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
                 case 1:
                     return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
-                case 2:
-
-                    return PlaceholderFragment3.newInstance(position + 1);//return whic frag is called
                 default:
 
                     return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
@@ -234,19 +189,17 @@ public class Manager extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {//name of frag
             switch (position) {
                 case 0:
-                    return "Marks";
+                    return "إظهار علامات ";
                 case 1:
-                    return "Mark2";
-                case 2:
-                    return "Mark3";
+                    return "إظهار الغيابات ";
             }
             return null;
         }
