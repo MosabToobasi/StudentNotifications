@@ -162,7 +162,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     }
 // hoooerw rkwe;r klwe; r/.wel ,r.ew Rew,'; rew rwe
     //fdsfdsfdsfd
-    public  boolean isfull(int teacherid,int classid,int courseid )
+    public  boolean isfull()
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;

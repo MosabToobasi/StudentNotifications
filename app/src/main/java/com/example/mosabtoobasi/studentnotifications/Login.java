@@ -68,35 +68,36 @@ public class Login extends AppCompatActivity {
                             }
                         });
                 queue.add(jsObjRequest);
-                if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_APPEND) != 0) {
+                DataBaseHelperahmaddaraghmeh tempdb = new DataBaseHelperahmaddaraghmeh(getBaseContext());
+                    if(tempdb.isfull()){
+
+                if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
                     JsonObjectRequest jsObjRequest1 = new JsonObjectRequest
                             (Request.Method.POST, url + "tclass", para, new Response.Listener<JSONObject>() {
 
                                 @Override
                                 public void onResponse(JSONObject response) {
+
                                     //Toast.makeText(getBaseContext(), "" + response.length(), Toast.LENGTH_LONG).show();
-                                    String name = SharedPrefHelper.getStringSharedPref(getBaseContext(),"USERNAME",getBaseContext().MODE_PRIVATE);
-                                    int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(),"ID",getBaseContext().MODE_PRIVATE);
                                     DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
-                                    db.insertteacher(name,Tid);
-                                    for (int i=1;i<=response.length()/4;i++) {
+                                    String name = SharedPrefHelper.getStringSharedPref(getBaseContext(), "USERNAME", getBaseContext().MODE_PRIVATE);
+                                    int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE);
+                                    db.insertteacher(name, Tid);
+                                    for (int i = 1; i <= response.length() / 4; i++) {
                                         try {
                                             int clid = response.getInt("CL_ID" + i);
                                             int coid = response.getInt("CO_ID" + i);
-                                            String cn = response.getString("CL_NM"+i);
-                                            String con = response.getString("CO_NM"+i);
-                                            db.insertclass(cn,clid);
-                                            db.insertcourse(con,coid);
-                                            db.addclassandcoursetoteacher(Tid,clid,coid);
+                                            String cn = response.getString("CL_NM" + i);
+                                            String con = response.getString("CO_NM" + i);
+                                            db.insertclass(cn, clid);
+                                            db.insertcourse(con, coid);
+                                            db.addclassandcoursetoteacher(Tid, clid, coid);
                                             //Toast.makeText(getBaseContext(), "" + clid + " "+coid, Toast.LENGTH_SHORT).show();
-                                        }
-                                        catch (JSONException e){
+                                        } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
                                     }
-                                    Intent i = new Intent(Login.this, Teacher.class);
-                                    startActivity(i);
-                                    finish();
+
                                 }
                             }, new Response.ErrorListener() {
 
@@ -110,7 +111,12 @@ public class Login extends AppCompatActivity {
                             });
                     queue.add(jsObjRequest1);
                 }
-
+                }
+                if(SharedPrefHelper.getIntSharedPref(getBaseContext(),"ID",getBaseContext().MODE_PRIVATE)!= 0){
+                    Intent i = new Intent(Login.this, Teacher.class);
+                    startActivity(i);
+                    finish();
+                }
 
 
             }
