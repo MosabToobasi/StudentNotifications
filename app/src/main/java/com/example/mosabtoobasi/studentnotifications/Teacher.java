@@ -362,9 +362,9 @@ public class Teacher extends AppCompatActivity {
                 case 1:
                     return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
                 case 2:
-                    return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
+                    return PlaceholderFragment3.newInstance(position + 1);//return whic frag is called
                 case 3:
-                    return PlaceholderFragment2.newInstance(position + 1);//return whic frag is called
+                    return PlaceholderFragment4.newInstance(position + 1);//return whic frag is called
                 default:
                     return PlaceholderFragment.newInstance(position + 1);//return whic frag is called
             }
