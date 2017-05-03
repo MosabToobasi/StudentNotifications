@@ -1,6 +1,7 @@
 package com.example.mosabtoobasi.studentnotifications;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 /**
@@ -149,6 +150,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(ft_id,teacherid);
         cv.put(fc_id,courseid);
         cv.put(fclass_id,classid);
+        db.execSQL("create table "+teacher_table+" (tid integer primary key autoincrement,tname text)");
 
 
         long result=db.insert(teachercoursclass_table,null,cv);
@@ -157,6 +159,19 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         } else {
             return true;
         }
+    }
+// hoooerw rkwe;r klwe; r/.wel ,r.ew Rew,'; rew rwe
+    //fdsfdsfdsfd
+    public  boolean isfull(int teacherid,int classid,int courseid )
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+ DatabaseHelper.TABLE_OUTLET;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        if(cursor.getCount() >0)
+        {
+        return  true;
+        }
+        else {return  false;}
     }
 
 }

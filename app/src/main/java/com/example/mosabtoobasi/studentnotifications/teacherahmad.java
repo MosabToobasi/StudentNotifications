@@ -5,24 +5,20 @@ package com.example.mosabtoobasi.studentnotifications;
         import android.os.Bundle;
         import android.widget.Toast;
 
-        import util.SharedPrefHelper;
-
-        import static java.security.AccessController.getContext;
-
 public class teacherahmad extends AppCompatActivity {
     DataBaseHelperahmaddaraghmeh myDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacherahmad);
-        int curent_teacher_id= SharedPrefHelper.getIntSharedPref(getBaseContext(),"ID",getBaseContext().MODE_PRIVATE);
+        int curent_teacher_id=1;
 
         myDb=new  DataBaseHelperahmaddaraghmeh(this);
 
        boolean x;
-
         Toast.makeText(teacherahmad.this,"ahmad not inserted",Toast.LENGTH_LONG).show();
-  /*      x=myDb.insertstudent("ahmad");
+     //ملاحظه الجمل اللي تحت في الكمنت استخدمها مره وحده عشان يصير في داتا في اللوكال
+       /* x=myDb.insertstudent("ahmad");
         x=myDb.insertstudent("ali");
         x=myDb.insertstudent("mohammad");
         x=myDb.insertstudent("omar");
