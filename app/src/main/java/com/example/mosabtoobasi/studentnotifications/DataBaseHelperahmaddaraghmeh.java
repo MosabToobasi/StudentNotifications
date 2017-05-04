@@ -219,7 +219,67 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     }
 
 
+    public  int getclasses()
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+class_name+"FROM "+class_table;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        int count=0,i2=0;
+        for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
 
+    public  int getclassess()
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+class_name+"FROM "+class_table;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        int count=0,i2=0;
+        for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
+    public  int getcmarksne(int studentid,int courseid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+exam1+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        int count=0,i2=0;
+        for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
+    public  int getcmarktwo(int studentid,int courseid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+exam2+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        int count=0,i2=0;
+        for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
+    public  int getcmarkquizes(int studentid,int courseid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        int count=0,i2=0;
+        for (i2=-0;i2<cursor.getCount();i2++)
+        {
+            count++;
+        }
+        return count;
+    }
 
 
 

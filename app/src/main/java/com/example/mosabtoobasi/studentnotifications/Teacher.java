@@ -263,7 +263,7 @@ public class Teacher extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.mark2, container, false);
-            Button A = (Button) rootView.findViewById(R.id.saveformmark);
+            Button A = (Button) rootView.findViewById(R.id.Saveformmark);
             //int curent_teacher_id=1;
             DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
             final int x = myDb.getcourses();
