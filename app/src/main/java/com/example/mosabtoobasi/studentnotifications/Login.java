@@ -146,16 +146,18 @@ public class Login extends AppCompatActivity {
                                     }
 
                                 });
+                        queue.add(jsObjRequest2);
 
-                        if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
-                            Intent i = new Intent(Login.this, Teacher.class);
-                            startActivity(i);
-                            finish();
-                        }
 
 
                     }
                 }
+                if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                    Intent i = new Intent(Login.this, Teacher.class);
+                    startActivity(i);
+                    finish();
+                }
+
             }
         });
     }
