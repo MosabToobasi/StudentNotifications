@@ -187,7 +187,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(exam1,mark);
         db.execSQL("UPDATE "+studentcourse_table+" SET "+exam1+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
-
+    ////insert exam1 for a student
 
     public  void insertmarktwo(int courseid,int studentid,int mark)
     {
@@ -198,6 +198,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(exam2,mark);
         db.execSQL("UPDATE "+studentcourse_table+" SET "+exam2+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
+    ////insert exam2 for a student
     public  void insertmarkquizes(int courseid,int studentid,int mark)
     {
         ContentValues cv=new ContentValues();
@@ -207,7 +208,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(quizes,mark);
         db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
-
+////insert quiz for a student
     public ArrayList<String> getcourses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
@@ -223,7 +224,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         }
         return arrayList;
     }
-
+///get course name
     public ArrayList<String> getclasses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
@@ -239,7 +240,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         }
         return arrayList;
     }
-
+////get class class name
 
     public  int getcmarksne(int studentid,int courseid)
     {
@@ -253,6 +254,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         }
        else{return  0;}
     }
+    ////return exam1
     public  int getcmarktwo(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
@@ -263,6 +265,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
             return  cursor.getInt(0);
         }
         else{return  0;}
+        ////return exam2
     }
     public  int getcmarkquizes(int studentid,int courseid)
     {
@@ -275,6 +278,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
 
         }
         else{return  0;}
+        ////return quiz mark
     }
 
     public ArrayList<String> getstudentnameandcoursenameandexams(int studentid,int courseid)
@@ -297,7 +301,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
 
         }
 
-       return arrayList;
+       return arrayList;///example return <"ali","english",42,5,2>
 
     }
 
