@@ -69,7 +69,7 @@ public class Login extends AppCompatActivity {
                         });
                 queue.add(jsObjRequest);
                 DataBaseHelperahmaddaraghmeh tempdb = new DataBaseHelperahmaddaraghmeh(getBaseContext());
-                if (tempdb.isfull()) {
+                if (!tempdb.isfull()) {
 
                     if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
                         JsonObjectRequest jsObjRequest1 = new JsonObjectRequest
