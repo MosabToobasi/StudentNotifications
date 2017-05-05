@@ -69,56 +69,93 @@ public class Login extends AppCompatActivity {
                         });
                 queue.add(jsObjRequest);
                 DataBaseHelperahmaddaraghmeh tempdb = new DataBaseHelperahmaddaraghmeh(getBaseContext());
-                    if(tempdb.isfull()){
+                if (tempdb.isfull()) {
 
-                if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
-                    JsonObjectRequest jsObjRequest1 = new JsonObjectRequest
-                            (Request.Method.POST, url + "tclass", para, new Response.Listener<JSONObject>() {
+                    if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                        JsonObjectRequest jsObjRequest1 = new JsonObjectRequest
+                                (Request.Method.POST, url + "tclass", para, new Response.Listener<JSONObject>() {
 
-                                @Override
-                                public void onResponse(JSONObject response) {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
 
-                                    //Toast.makeText(getBaseContext(), "" + response.length(), Toast.LENGTH_LONG).show();
-                                    DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
-                                    String name = SharedPrefHelper.getStringSharedPref(getBaseContext(), "USERNAME", getBaseContext().MODE_PRIVATE);
-                                    int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE);
-                                    db.insertteacher(name, Tid);
-                                    for (int i = 1; i <= response.length() / 4; i++) {
-                                        try {
-                                            int clid = response.getInt("CL_ID" + i);
-                                            int coid = response.getInt("CO_ID" + i);
-                                            String cn = response.getString("CL_NM" + i);
-                                            String con = response.getString("CO_NM" + i);
-                                            db.insertclass(cn, clid);
-                                            db.insertcourse(con, coid);
-                                            db.addclassandcoursetoteacher(Tid, clid, coid);
-                                            //Toast.makeText(getBaseContext(), "" + clid + " "+coid, Toast.LENGTH_SHORT).show();
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                        //Toast.makeText(getBaseContext(), "" + response.length(), Toast.LENGTH_LONG).show();
+                                        DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
+                                        String name = SharedPrefHelper.getStringSharedPref(getBaseContext(), "USERNAME", getBaseContext().MODE_PRIVATE);
+                                        int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE);
+                                        db.insertteacher(name, Tid);
+                                        for (int i = 1; i <= response.length() / 4; i++) {
+                                            try {
+                                                int clid = response.getInt("CL_ID" + i);
+                                                int coid = response.getInt("CO_ID" + i);
+                                                String cn = response.getString("CL_NM" + i);
+                                                String con = response.getString("CO_NM" + i);
+                                                db.insertclass(cn, clid);
+                                                db.insertcourse(con, coid);
+                                                db.addclassandcoursetoteacher(Tid, clid, coid);
+                                                //Toast.makeText(getBaseContext(), "" + clid + " "+coid, Toast.LENGTH_SHORT).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // TODO Auto-generated method stub
+                                        Log.d("error", error.getMessage());
+                                        //Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+
+                                });
+                        queue.add(jsObjRequest1);
+                        JsonObjectRequest jsObjRequest2 = new JsonObjectRequest
+                                (Request.Method.POST, url + "marks", para, new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        int Tid = SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE);
+                                        for (int i=1;i<=response.length()/8;i++) {
+                                            try {
+                                                DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
+                                                db.insertstudent(response.getString("stu"+i+"_NAME"), response.getInt("stu"+i+"_ID"));
+                                                db.addclasstostudent(response.getInt("stu"+i+"_CLASS"),response.getInt("stu"+i+"_ID"));
+                                                db.addcoursetostudent(response.getInt("stu"+i+"_COURSE"),response.getInt("stu"+i+"_ID"));
+                                                db.insertmarkone(response.getInt("stu"+i+"_COURSE"),response.getInt("stu"+i+"_ID"),response.getInt("stu"+i+"_EXAM1"));
+                                                db.insertmarktwo(response.getInt("stu"+i+"_COURSE"),response.getInt("stu"+i+"_ID"),response.getInt("stu"+i+"_EXAM2"));
+                                                db.insertmarkquizes(response.getInt("stu"+i+"_COURSE"),response.getInt("stu"+i+"_ID"),response.getInt("stu"+i+"_QUIZES"));
+                                                DatabaseHelper1 db1 = new DatabaseHelper1(getBaseContext());
+                                                db1.insertData(response.getString("stu"+i+"_NAME"),""+Tid,""+response.getInt("stu"+i+"_ATEND"));
+
+
+                                            }
+                                        catch (JSONException ex){
+                                            ex.printStackTrace();
+                                        }
                                         }
                                     }
 
-                                }
-                            }, new Response.ErrorListener() {
 
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    // TODO Auto-generated method stub
-                                    Log.d("error", error.getMessage());
-                                    //Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                                }
+                                }, new Response.ErrorListener() {
 
-                            });
-                    queue.add(jsObjRequest1);
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // TODO Auto-generated method stub
+                                        Log.d("error", error.getMessage());
+                                        //Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+
+                                });
+
+                        if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                            Intent i = new Intent(Login.this, Teacher.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+
+                    }
                 }
-                }
-                if(SharedPrefHelper.getIntSharedPref(getBaseContext(),"ID",getBaseContext().MODE_PRIVATE)!= 0){
-                    Intent i = new Intent(Login.this, Teacher.class);
-                    startActivity(i);
-                    finish();
-                }
-
-
             }
         });
     }
