@@ -224,67 +224,81 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         return arrayList;
     }
 
-
-    public  int getclasses()
+    public ArrayList<String> getclasses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT "+class_name+"FROM "+class_table;
+        String selectQuery = "SELECT "+class_name+" FROM "+class_table;
         Cursor cursor =db.rawQuery(selectQuery,null);
-        int count=0,i2=0;
+        int i2=0;
+        ArrayList<String> arrayList=new ArrayList<String>();
         for (i2=-0;i2<cursor.getCount();i2++)
         {
-            count++;
+
+            arrayList.add(cursor.getString(i2));
+            cursor.moveToNext();
         }
-        return count;
+        return arrayList;
     }
 
-    public  int getclassess()
-    {
-        SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT "+class_name+"FROM "+class_table;
-        Cursor cursor =db.rawQuery(selectQuery,null);
-        int count=0,i2=0;
-        for (i2=-0;i2<cursor.getCount();i2++)
-        {
-            count++;
-        }
-        return count;
-    }
+
     public  int getcmarksne(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+exam1+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        int count=0,i2=0;
-        for (i2=-0;i2<cursor.getCount();i2++)
+
+        if (0<cursor.getCount())
         {
-            count++;
+            return  cursor.getInt(0);
         }
-        return count;
+       else{return  0;}
     }
     public  int getcmarktwo(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+exam2+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        int count=0,i2=0;
-        for (i2=-0;i2<cursor.getCount();i2++)
+        if (0<cursor.getCount())
         {
-            count++;
+            return  cursor.getInt(0);
         }
-        return count;
+        else{return  0;}
     }
     public  int getcmarkquizes(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        int count=0,i2=0;
-        for (i2=-0;i2<cursor.getCount();i2++)
+        if (0<cursor.getCount())
         {
-            count++;
+            return  cursor.getInt(0);
+
         }
-        return count;
+        else{return  0;}
+    }
+
+    public ArrayList<String> getstudentnameandcoursenameandexams(int studentid,int courseid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery1 =  "SELECT "+c_name+" from "+course_table+" where "+c_name+"="+courseid+" ";
+        Cursor cursor1 =db.rawQuery(selectQuery1,null);
+        String selectQuery2 =  "SELECT "+s_name+" from "+student_table+" where "+s2_id2+"="+studentid+" ";
+        Cursor cursor2 =db.rawQuery(selectQuery2,null);
+        String selectQuery3 =  "SELECT "+exam1+","+exam2+","+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        Cursor cursor3 =db.rawQuery(selectQuery3,null);
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if ((0<cursor1.getCount()) && (0<cursor2.getCount()) && (0<cursor3.getCount()))
+        {
+            arrayList.add(0,cursor1.getString(0));//for student name
+            arrayList.add(1,cursor2.getString(0));//for course name
+            arrayList.add(2,cursor2.getString(0));//for exam1
+            arrayList.add(2,cursor2.getString(1));//for exam2
+            arrayList.add(2,cursor2.getString(2));//for quizes
+
+        }
+
+       return arrayList;
+
     }
 
 
