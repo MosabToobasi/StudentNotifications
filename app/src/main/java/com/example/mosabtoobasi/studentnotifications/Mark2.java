@@ -13,14 +13,13 @@ import android.widget.Toast;
 public class Mark2 extends AppCompatActivity {
 
     DataBaseHelperahmaddaraghmeh myDb;
-final Button A=(Button) findViewById(R.id.Saveformmark);
+final Button A=(Button) findViewById(R.id.saveformmark);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mark2);
         int curent_teacher_id=1;
         myDb=new  DataBaseHelperahmaddaraghmeh(this);
-        final   int x= myDb.getcourses();
 
 
 
@@ -28,7 +27,7 @@ final Button A=(Button) findViewById(R.id.Saveformmark);
 
 
                              @Override
-                             public void onClick(View v) {Toast.makeText(Mark2.this,""+x,Toast.LENGTH_LONG).show();}});
+                             public void onClick(View v) {Toast.makeText(Mark2.this,""+0,Toast.LENGTH_LONG).show();}});
 ///////////////
 ///
 

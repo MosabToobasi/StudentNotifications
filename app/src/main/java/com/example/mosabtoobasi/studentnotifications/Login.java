@@ -161,7 +161,6 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
 public void inputDat(View view) {
     final EditText id = (EditText) findViewById(R.id.Id);
     final EditText pass = (EditText) findViewById(R.id.Password);
