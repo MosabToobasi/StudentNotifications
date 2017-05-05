@@ -24,10 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import util.SharedPrefHelper;
 
@@ -265,15 +268,21 @@ public class Teacher extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.mark2, container, false);
             Button A = (Button) rootView.findViewById(R.id.saveformmark);
             //int curent_teacher_id=1;
-            DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
-            final int x = 0;
+            final DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
+         //  final ArrayList<String> a=myDb.getstudentnameandcoursenameandexams(6,7);
+            final  ArrayList<String> a= new ArrayList<String>(myDb.getstudentnameandcoursenameandexams(6,7));
+
+
+
+
+
 
                 A.setOnClickListener(new View.OnClickListener() {
 
 
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), ""+x, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),a.get(0)+a.get(1)+a.get(2)+a.get(3)+a.get(4), Toast.LENGTH_LONG).show();
                     }
                 });
 

@@ -153,9 +153,6 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(ft_id,teacherid);
         cv.put(fc_id,courseid);
         cv.put(fclass_id,classid);
-        db.execSQL("create table "+teacher_table+" (tid integer primary key autoincrement,tname text)");
-
-
         long result=db.insert(teachercoursclass_table,null,cv);
         if (result == -1) {
             return false;
@@ -212,95 +209,163 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     public ArrayList<String> getcourses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT "+c_name+" FROM "+course_table;
+        String selectQuery = "SELECT "+c_name+" FROM "+course_table+" where 1=1";
         Cursor cursor =db.rawQuery(selectQuery,null);
-      int i2=0;
         ArrayList<String> arrayList=new ArrayList<String>();
-       for (i2=-0;i2<cursor.getCount();i2++)
+        if (cursor.moveToFirst())
         {
+            do
+            {
+                try {
+                  arrayList.add(cursor.getString(cursor.getColumnIndex(c_name)));
+                }
+                catch (Exception ex){}
 
-            arrayList.add(cursor.getString(i2));
-            cursor.moveToNext();
+
+            }while (cursor.moveToNext());
         }
         return arrayList;
+
     }
 ///get course name
     public ArrayList<String> getclasses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery = "SELECT "+class_name+" FROM "+class_table;
+        String selectQuery = "SELECT "+class_name+" FROM "+class_table+" where 1=1";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        int i2=0;
-        ArrayList<String> arrayList=new ArrayList<String>();
-        for (i2=-0;i2<cursor.getCount();i2++)
-        {
 
-            arrayList.add(cursor.getString(i2));
-            cursor.moveToNext();
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex(class_name)));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
         }
         return arrayList;
     }
 ////get class class name
 
-    public  int getcmarksne(int studentid,int courseid)
+    public  String getcmarksne(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery =  "SELECT "+exam1+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
-        Cursor cursor =db.rawQuery(selectQuery,null);
+        String selectQuery =  "SELECT exam1 from "+studentcourse_table+" where "+s2_id+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        String s1="error";
 
-        if (0<cursor.getCount())
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        if (cursor.moveToFirst())
         {
-            return  cursor.getInt(0);
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex("exam1"));
+                }
+             catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
         }
-       else{return  0;}
+        return s1;
+/**/
     }
     ////return exam1
-    public  int getcmarktwo(int studentid,int courseid)
+    public  String getcmarktwo(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+exam2+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        if (0<cursor.getCount())
+        String s1="error";
+        if (cursor.moveToFirst())
         {
-            return  cursor.getInt(0);
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(exam2));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
         }
-        else{return  0;}
-        ////return exam2
+        return s1;
     }
-    public  int getcmarkquizes(int studentid,int courseid)
+    public  String getcmarkquizes(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        if (0<cursor.getCount())
+        String s1="error";
+        if (cursor.moveToFirst())
         {
-            return  cursor.getInt(0);
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(quizes));
+                }
+                catch (Exception ex){}
 
+
+            }while (cursor.moveToNext());
         }
-        else{return  0;}
-        ////return quiz mark
+        return s1;
     }
 
-    public ArrayList<String> getstudentnameandcoursenameandexams(int studentid,int courseid)
+   public ArrayList<String> getstudentnameandcoursenameandexams(int studentid,int courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String selectQuery1 =  "SELECT "+c_name+" from "+course_table+" where "+c_name+"="+courseid+" ";
+        String selectQuery1 =  "SELECT "+c_name+" from "+course_table+" where "+c_id+"="+courseid+" ";
         Cursor cursor1 =db.rawQuery(selectQuery1,null);
-        String selectQuery2 =  "SELECT "+s_name+" from "+student_table+" where "+s2_id2+"="+studentid+" ";
+        String selectQuery2 =  "SELECT "+s_name+" from "+student_table+" where "+s_id+"="+studentid+" ";
         Cursor cursor2 =db.rawQuery(selectQuery2,null);
-        String selectQuery3 =  "SELECT "+exam1+","+exam2+","+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
+        String selectQuery3 =  "SELECT "+exam1+","+exam2+","+quizes+" from "+studentcourse_table+" where "+s2_id+"="+studentid+" and "+course2_id+"="+courseid+"";
         Cursor cursor3 =db.rawQuery(selectQuery3,null);
         ArrayList<String> arrayList=new ArrayList<String>();
-        if ((0<cursor1.getCount()) && (0<cursor2.getCount()) && (0<cursor3.getCount()))
+        String s1="error";
+        String s2="error";
+        String s3="error";
+        String s4="error";
+        String s5="error";
+      try {
+          if (cursor1.moveToFirst())
+          {
+              do
+              {
+                  s1 = cursor1.getString(cursor1.getColumnIndex(c_name));
+
+              }while (cursor1.moveToNext());
+          }
+
+        if (cursor2.moveToFirst())
         {
-            arrayList.add(0,cursor1.getString(0));//for student name
-            arrayList.add(1,cursor2.getString(0));//for course name
-            arrayList.add(2,cursor2.getString(0));//for exam1
-            arrayList.add(2,cursor2.getString(1));//for exam2
-            arrayList.add(2,cursor2.getString(2));//for quizes
+            do
+            {
+                s2 = cursor2.getString(cursor2.getColumnIndex(s_name));
 
+
+
+            }while (cursor2.moveToNext());
         }
+        if (cursor3.moveToFirst())
+        {
+            do
+            {
+                s3 = cursor3.getString(cursor3.getColumnIndex(exam1));
+                s4 = cursor3.getString(cursor3.getColumnIndex(exam2));
+                s5 = cursor3.getString(cursor3.getColumnIndex(quizes));
 
+
+            }while (cursor3.moveToNext());
+        }}catch (Exception EX){}
+        arrayList.add(s1);
+        arrayList.add(s2);
+        arrayList.add(s3);
+        arrayList.add(s4);
+        arrayList.add(s5);
        return arrayList;///example return <"ali","english",42,5,2>
 
     }
