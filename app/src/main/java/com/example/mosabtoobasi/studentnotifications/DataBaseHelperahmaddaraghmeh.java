@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+
 /**
  * Created by EliteBook8570w on 5/1/2017.
  */
@@ -205,17 +208,20 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
 
-    public int getcourses()
+    public ArrayList<String> getcourses()
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery = "SELECT "+c_name+" FROM "+course_table;
         Cursor cursor =db.rawQuery(selectQuery,null);
-      int count=0,i2=0;
+      int i2=0;
+        ArrayList<String> arrayList=new ArrayList<String>();
        for (i2=-0;i2<cursor.getCount();i2++)
         {
-            count++;
+
+            arrayList.add(cursor.getString(i2));
+            cursor.moveToNext();
         }
-        return count;
+        return arrayList;
     }
 
 
