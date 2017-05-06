@@ -158,6 +158,7 @@ public class Teacher extends AppCompatActivity {
             Context context;
             context=getContext();
             // Create DatabaseHelper instance
+            /*
             DatabaseHelper dataHelper=new DatabaseHelper(context);
             // Reference to TableLayout
 
@@ -245,7 +246,7 @@ public class Teacher extends AppCompatActivity {
                 db.close();
                 // Close database
             }
-
+*/
             return rootView;
         }
     }

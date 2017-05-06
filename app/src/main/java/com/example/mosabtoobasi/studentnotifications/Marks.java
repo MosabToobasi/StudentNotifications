@@ -20,6 +20,7 @@ public class Marks extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.marks);
+        /*
         context=this;
         // Create DatabaseHelper instance
         DatabaseHelper dataHelper=new DatabaseHelper(context);
@@ -102,6 +103,7 @@ public class Marks extends Activity {
             db.close();
             // Close database
         }
+        */
     }}
 
 
