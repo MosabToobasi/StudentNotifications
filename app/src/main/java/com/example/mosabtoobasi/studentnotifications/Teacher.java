@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +32,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,6 +108,11 @@ public class Teacher extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPrefHelper.removeall(getBaseContext(),getBaseContext().MODE_PRIVATE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -420,7 +437,49 @@ public class Teacher extends AppCompatActivity {
                                myDb.insertmarktwov2(co.toString(), studspiner2.getSelectedItem().toString(), second.getText().toString());
                                myDb.insertmarkquizesv2(co.toString(), studspiner2.getSelectedItem().toString(), quizes.getText().toString());
                                Toast.makeText(getContext(),"Saved Successfully", Toast.LENGTH_LONG).show();
+                               JSONObject para = new JSONObject();
+                               try{
+                                   para.put("S_ID",Integer.parseInt(studspiner2.getSelectedItem().toString()));
+                                   para.put("C_ID",Integer.parseInt(co.toString()));
+                                   para.put("first",Integer.parseInt(first.getText().toString()));
+                                   para.put("second",Integer.parseInt(second.getText().toString()));
+                                   para.put("quiz",Integer.parseInt(quizes.getText().toString()));
+                                   JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                                           (Request.Method.POST, Login.url + "inmark", para, new Response.Listener<JSONObject>() {
 
+                                               @Override
+                                               public void onResponse(JSONObject response) {
+                                                   try{
+                                                       if (response.getInt("ok")==200){
+                                                           Toast.makeText(getContext(),"data was inserted globally", Toast.LENGTH_LONG).show();
+                                                       }
+                                                       else{
+                                                           Toast.makeText(getContext(),"Failed to insert data globally", Toast.LENGTH_LONG).show();
+                                                       }
+                                                   }
+                                                   catch (JSONException exe){
+                                                       exe.printStackTrace();
+                                                   }
+
+                                               }
+
+                                               }, new Response.ErrorListener() {
+
+                                                   @Override
+                                                   public void onErrorResponse(VolleyError error) {
+                                                       // TODO Auto-generated method stub
+                                                       Log.d("error", error.getMessage());
+                                                       //Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                                                   }
+
+                                               });
+                                           RequestQueue queue = Volley.newRequestQueue(getContext());
+                                            queue.add(jsObjRequest);
+                                           }
+
+                               catch (JSONException ex){
+                                   ex.printStackTrace();
+                               }
                                //Toast.makeText(getContext(), myDb.getclassid("Saved Successfully"), Toast.LENGTH_LONG).show();
                            }
                            catch (Exception ex){Toast.makeText(getContext(),"Fail", Toast.LENGTH_LONG).show();}

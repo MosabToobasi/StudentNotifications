@@ -42,6 +42,7 @@ public class SharedPrefHelper {
         editor.putBoolean(key, value);
 
         editor.commit();
+
     }
 
 
@@ -69,5 +70,12 @@ public class SharedPrefHelper {
         boolean defaultValue = false;
         return sharedPref.getBoolean(key, defaultValue);
 
+    }
+    public static void removeall(Context context, int mode){
+        SharedPreferences sharedPref = context.getSharedPreferences(SHARED_PREFERENCES_FILE ,mode);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
     }
 }

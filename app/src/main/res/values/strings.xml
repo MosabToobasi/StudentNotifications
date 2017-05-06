@@ -30,5 +30,6 @@
         <item>Test 5</item>
         <item>Test 6</item>
 
-    </string-array>s
+    </string-array>
+    <string name="title_activity_student_ace">Student</string>s
 </resources>
