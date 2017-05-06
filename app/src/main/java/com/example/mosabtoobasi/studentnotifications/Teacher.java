@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -112,6 +113,7 @@ public class Teacher extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SharedPrefHelper.removeall(getBaseContext(),getBaseContext().MODE_PRIVATE);
+        getBaseContext().deleteDatabase(DataBaseHelperahmaddaraghmeh.database_name);
     }
 
     @Override
@@ -174,6 +176,24 @@ public class Teacher extends AppCompatActivity {
            // textView.setText(user+" id : "+id);
             Context context;
             context=getContext();
+            DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(context);
+            ArrayList<String> sa = db.getstudentsids();
+            ArrayList<String> fi = new ArrayList<String>();
+            for (String sid:sa) {
+                ArrayList<String> ca = db.getstudentcourseid(sid);
+                for (String Object:ca)
+                {
+                    String first = db.getcmarksne(sid,Object);
+                    String second = db.getcmarktwo(sid,Object);
+                    String quiz = db.getcmarkquizes(sid,Object);
+                    fi.add(db.getstudentnaem(sid)+"\t"+db.getcoursename(Object)+"\t"+first+"\t"+second+"\t"+quiz);
+                }
+
+
+            }
+            final ListView lv = (ListView)rootView.findViewById(R.id.view_marks);
+            ArrayAdapter<String> ad = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,fi);
+            lv.setAdapter(ad);
             // Create DatabaseHelper instance
             /*
             DatabaseHelper dataHelper=new DatabaseHelper(context);

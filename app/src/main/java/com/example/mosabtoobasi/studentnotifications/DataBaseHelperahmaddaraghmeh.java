@@ -249,9 +249,9 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
             do
             {
                 try {
-                  arrayList.add(cursor.getString(cursor.getColumnIndex(c_name)));
+                    arrayList.add(cursor.getString(cursor.getColumnIndex(c_name)));
                 }
-                catch (Exception ex){}
+                catch (Exception ex){ex.printStackTrace();}
 
 
             }while (cursor.moveToNext());
@@ -569,7 +569,60 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
        return arrayList;///example return <"ali","english",42,5,2>
 
     }
+    public ArrayList<String> getstudentsids(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+s_id+" FROM "+student_table+" where 1=1";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex(s_id)));
+                }
+                catch (Exception ex){ex.printStackTrace();}
 
+
+            }while (cursor.moveToNext());
+        }
+        return arrayList;
+
+    }
+    public ArrayList<String> getstudentcourseid(String sid){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+course2_id+" FROM "+studentcourse_table+" where "+s2_id+"= "+sid;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex(course2_id)));
+                }
+                catch (Exception ex){ex.printStackTrace();}
+
+
+            }while (cursor.moveToNext());
+        }
+        return arrayList;
+    }
+    public String getcoursename(String cid){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT "+c_name+" FROM "+course_table+" where "+c_id+"= "+cid;
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        String ret;
+        ret = "error";
+        if (cursor.moveToFirst()){
+            try {
+                ret = cursor.getString(cursor.getColumnIndex(c_name));
+            }
+            catch (Exception ex){ex.printStackTrace();}
+
+        }
+        return ret;
+    }
 
 
 

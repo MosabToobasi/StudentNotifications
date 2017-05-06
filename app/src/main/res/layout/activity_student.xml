@@ -14,10 +14,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_student_ace" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -27,26 +23,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <Spinner
-        android:id="@+id/choose_mark"
+    <ListView
+        android:id="@+id/viewListmarks"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_marginTop="72dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="89dp" />
 
     <TextView
-        android:id="@+id/mark_view"
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:text="TextView"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|center_horizontal"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="71dp"
-        android:layout_below="@+id/choose_mark"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="51dp"
+        android:text="عرض العلامات" />
 
 </RelativeLayout>

@@ -30,7 +30,7 @@ public static final String url = "http://momenserve.netne.net/public/";
                 //welcome home
                 final EditText id = (EditText) findViewById(R.id.Id);
                 final EditText pass = (EditText) findViewById(R.id.Password);
-                String s = id.getText().toString();
+                final String s = id.getText().toString();
                 String e = pass.getText().toString();
 
                 JSONObject para = new JSONObject();
@@ -129,6 +129,11 @@ public static final String url = "http://momenserve.netne.net/public/";
                                                     DatabaseHelper1 db1 = new DatabaseHelper1(getBaseContext());
                                                     db1.insertData(response.getString("stu" + i + "_NAME"), "" + Tid, "" + response.getInt("stu" + i + "_ATEND"));
 
+                                                    if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                                                        Intent I = new Intent(Login.this, Teacher.class);
+                                                        startActivity(I);
+                                                        finish();
+                                                    }
 
                                                 } catch (JSONException ex) {
                                                     ex.printStackTrace();
@@ -151,20 +156,30 @@ public static final String url = "http://momenserve.netne.net/public/";
 
 
                         }
+
                     }
-                    if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
-                        Intent i = new Intent(Login.this, Teacher.class);
-                        startActivity(i);
-                        finish();
+                    else{
+
+                        if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                            Intent i = new Intent(Login.this, Teacher.class);
+                            startActivity(i);
+                            finish();
+                        }
                     }
                 }
                 else if (nod==7){
+                   final DataBaseHelperahmaddaraghmeh db = new DataBaseHelperahmaddaraghmeh(getBaseContext());
                     JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,para,new Response.Listener<JSONObject>(){
                         public void onResponse(JSONObject response) {
-                            try{
+                            try {
                                 SharedPrefHelper.setSharePref(getBaseContext(), "ID", response.getInt("S_ID"), getBaseContext().MODE_PRIVATE);
                                 SharedPrefHelper.setSharePref(getBaseContext(), "USERNAME", response.getString("S_USERNAME"), getBaseContext().MODE_PRIVATE);
                                 SharedPrefHelper.setSharePref(getBaseContext(), "type", "STUDENT", getBaseContext().MODE_PRIVATE);
+                                if (db.getstudentnaem(Integer.toString(response.getInt("S_ID")))!="error") {
+                                    db.insertstudent(response.getString("S_FULL_NAME"), response.getInt("S_ID"));
+                                    db.insertclass(response.getString("CLASS_NAME"), response.getInt("S_CLASS"));
+                                    db.addclasstostudent(response.getInt("S_CLASS"), response.getInt("S_ID"));
+                                }
                             }
                             catch (JSONException ex){
                                 ex.printStackTrace();
@@ -175,10 +190,45 @@ public static final String url = "http://momenserve.netne.net/public/";
                         }
                     });
                     queue.add(jsObjRequest);
-                    if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
-                        Intent i = new Intent(Login.this, Student_ace.class);
-                        startActivity(i);
-                        finish();
+                    if (db.getcourses().size()==0){
+                        JsonObjectRequest jsObjRequest1 = new JsonObjectRequest(Request.Method.POST, url+"smark", para, new Response.Listener<JSONObject>() {
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    for (int i = 1; i <= response.length() / 5; i++) {
+                                        int cid = response.getInt("S" + i + "c_ID");
+                                        int sid = Integer.parseInt(s);
+
+                                        db.insertcourse(response.getString("S" + i + "C_NAME"), cid);
+                                        db.addcoursetostudent(cid, sid);
+                                        db.insertmarkone(cid, sid, response.getInt("S" + i + "first"));
+                                        db.insertmarktwo(cid, sid, response.getInt("S" + i + "second"));
+                                        db.insertmarkquizes(cid, sid, response.getInt("S" + i + "quiz"));
+
+                                        if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                                            Intent I = new Intent(Login.this, Student_ace.class);
+                                            startActivity(I);
+                                            finish();
+                                        }
+                                    }
+
+                                } catch (JSONException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+                                , new Response.ErrorListener() {
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                        queue.add(jsObjRequest1);
+                    }
+                    else{
+
+                        if (SharedPrefHelper.getIntSharedPref(getBaseContext(), "ID", getBaseContext().MODE_PRIVATE) != 0) {
+                            Intent i = new Intent(Login.this, Student_ace.class);
+                            startActivity(i);
+                            finish();
+                        }
                     }
                 }
 
