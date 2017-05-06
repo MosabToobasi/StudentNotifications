@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -31,6 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.sql.RowSet;
 
 import util.SharedPrefHelper;
 
@@ -50,7 +56,6 @@ public class Teacher extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
 
 
 
@@ -138,6 +143,7 @@ public class Teacher extends AppCompatActivity {
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
+
         }
 
         @Override
@@ -161,7 +167,7 @@ public class Teacher extends AppCompatActivity {
             rowHeader.setBackgroundColor(Color.parseColor("#c0c0c0"));
             rowHeader.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT));
-            String[] headerText={"Course","Exam","Mark","Mark From"};
+            String[] headerText={"Course","Exam1","Exam2","Quizes"};
             for(String c:headerText) {
                 TextView tv = new TextView(getContext());
                 tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -171,6 +177,11 @@ public class Teacher extends AppCompatActivity {
                 tv.setPadding(5, 5, 5, 5);
                 tv.setText(c);
                 rowHeader.addView(tv);
+
+
+
+
+
             }
             tableLayout.addView(rowHeader);
 
@@ -197,7 +208,10 @@ public class Teacher extends AppCompatActivity {
                         TableRow row = new TableRow(context);
                         row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
                                 TableLayout.LayoutParams.WRAP_CONTENT));
-                        String[] colText={outlet_course_name,outlet_exam,outlet_mark,outlet_mark_from};
+                        final DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
+                        //  final ArrayList<String> a=myDb.getstudentnameandcoursenameandexams(6,7);
+                        final  ArrayList<String> a= new ArrayList<String>(myDb.getstudentnameandcoursenameandexams(6,7));
+                        String[] colText={a.get(0),a.get(2),a.get(3),a.get(4)};
                         for(String text:colText) {
                             TextView tv = new TextView(getContext());
                             tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -207,8 +221,11 @@ public class Teacher extends AppCompatActivity {
                             tv.setPadding(5, 5, 5, 5);
                             tv.setText(text);
                             row.addView(tv);
+
                         }
+
                         tableLayout.addView(row);
+
 
                     }
 
@@ -232,7 +249,6 @@ public class Teacher extends AppCompatActivity {
             return rootView;
         }
     }
-
 
     //frag2
     public static class PlaceholderFragment2 extends Fragment {
@@ -265,15 +281,123 @@ public class Teacher extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.mark2, container, false);
-            Button A = (Button) rootView.findViewById(R.id.saveformmark);
+            final View rootView = inflater.inflate(R.layout.mark2, container, false);
+            final Button A = (Button) rootView.findViewById(R.id.saveformmark);
             //int curent_teacher_id=1;
             final DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
-         //  final ArrayList<String> a=myDb.getstudentnameandcoursenameandexams(6,7);
-            final  ArrayList<String> a= new ArrayList<String>(myDb.getstudentnameandcoursenameandexams(6,7));
+            final ArrayList<String> arrayList= new ArrayList<String>(myDb.getclasses());
+            final Spinner classspinner=(Spinner)  rootView.findViewById(R.id.spinner2);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
+            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+            classspinner.setAdapter(spinnerArrayAdapter);
+
+            final ArrayList<String> arrayList2= new ArrayList<String>(myDb.getcourses());
+            final Spinner coursspinner=(Spinner)  rootView.findViewById(R.id.CSpiner);
+            ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList2);
+            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+            coursspinner.setAdapter(spinnerArrayAdapter2);
+
+
+            final String[] selectedclass = {" "};
+            final String []selectedcouse={" "};
+            classspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                   try{
+                       selectedclass[0] = (String) classspinner.getSelectedItem();
+
+                    final ArrayList<String> al1= new ArrayList<String>(myDb.getstudentsid(selectedclass[0],selectedcouse[0]));
+
+                    final Spinner studspin=(Spinner)  getView().findViewById(R.id.StudentSpiner);
+
+                    ArrayAdapter<String> spinnerArrayAdapter60 = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,al1);
+                    spinnerArrayAdapter60.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                    studspin.setAdapter(spinnerArrayAdapter60);
+                      studspin.setVisibility(getView().VISIBLE);
 
 
 
+
+                }catch (Exception ex){ Toast.makeText(getContext(),"No Student in "+selectedclass[0]+" and "+selectedcouse[0],Toast.LENGTH_SHORT).show();    final Spinner studspin=(Spinner)  getView().findViewById(R.id.StudentSpiner); studspin.setVisibility(getView().INVISIBLE);}
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
+
+            });
+///
+
+
+
+
+
+
+
+            coursspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                    try {  selectedcouse[0] = (String) coursspinner.getSelectedItem();
+                    final ArrayList<String> al1= new ArrayList<String>(myDb.getstudentsid(selectedclass[0],selectedcouse[0]));
+
+                    final Spinner studspin=(Spinner)  getView().findViewById(R.id.StudentSpiner);
+
+                    ArrayAdapter<String> spinnerArrayAdapter60 = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,al1);
+                    spinnerArrayAdapter60.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                    studspin.setAdapter(spinnerArrayAdapter60);
+                    studspin.setVisibility(View.VISIBLE);
+
+
+
+
+                }catch (Exception ex){ Toast.makeText(getContext(),"No Student in "+selectedclass[0]+" and "+selectedcouse[0],Toast.LENGTH_SHORT).show(); final Spinner studspin=(Spinner)  getView().findViewById(R.id.StudentSpiner); studspin.setVisibility(getView().INVISIBLE);}
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
+            });
+
+
+            final Spinner studspiner2=(Spinner)  rootView.findViewById(R.id.StudentSpiner);
+
+            final TextView STUNAME=(TextView) rootView.findViewById(R.id.STUNAME);
+
+            final TextView first=(TextView) rootView.findViewById(R.id.Feqzam);
+            final TextView second=(TextView) rootView.findViewById(R.id.Seqzam);
+            final TextView quizes=(TextView) rootView.findViewById(R.id.Fneqzam);
+
+              studspiner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                       @Override
+                                                       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                           Toast.makeText(getContext(),"No Student in ",Toast.LENGTH_SHORT).show();
+
+                                                          try {
+
+                                                           final DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
+                                                           STUNAME.setText(myDb.getstudentnaem(studspiner2.getSelectedItem().toString()));
+                                                              String co=myDb.getcid(coursspinner.getSelectedItem().toString());
+                                                              first.setText(myDb.getcmarksne(studspiner2.getSelectedItem().toString(),co));
+                                                              second.setText(myDb.getcmarktwo(studspiner2.getSelectedItem().toString(),co));
+                                                              quizes.setText(myDb.getcmarkquizes(studspiner2.getSelectedItem().toString(),co));
+
+                                                          }
+                                                          catch (Exception ex){Toast.makeText(getContext(),"No marks for "+STUNAME.getText(),Toast.LENGTH_SHORT).show();}
+                                                       }
+
+                                                       @Override
+                                                       public void onNothingSelected(AdapterView<?> parent) {
+
+                                                       }
+                                                   }
+
+              );
 
 
 
@@ -282,7 +406,25 @@ public class Teacher extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),a.get(0)+a.get(1)+a.get(2)+a.get(3)+a.get(4), Toast.LENGTH_LONG).show();
+
+                        final DataBaseHelperahmaddaraghmeh myDb = new DataBaseHelperahmaddaraghmeh(getContext());
+                        if(first.getText()=="" ||first.getText()==" " || first.getText()==null ||second.getText()=="" ||second.getText()==" " || second.getText()==null ||quizes.getText()=="" ||quizes.getText()==" " || quizes.getText()==null )
+                        {Toast.makeText(getContext(),"Error", Toast.LENGTH_LONG).show();}
+                     else
+                        {
+                           try {
+                               String co = myDb.getcid(coursspinner.getSelectedItem().toString());
+
+                               myDb.insertmarkonev2(co.toString(), studspiner2.getSelectedItem().toString(), first.getText().toString());
+                               myDb.insertmarktwov2(co.toString(), studspiner2.getSelectedItem().toString(), second.getText().toString());
+                               myDb.insertmarkquizesv2(co.toString(), studspiner2.getSelectedItem().toString(), quizes.getText().toString());
+                               Toast.makeText(getContext(),"Saved Successfully", Toast.LENGTH_LONG).show();
+
+                               //Toast.makeText(getContext(), myDb.getclassid("Saved Successfully"), Toast.LENGTH_LONG).show();
+                           }
+                           catch (Exception ex){Toast.makeText(getContext(),"Fail", Toast.LENGTH_LONG).show();}
+
+                        }
                     }
                 });
 

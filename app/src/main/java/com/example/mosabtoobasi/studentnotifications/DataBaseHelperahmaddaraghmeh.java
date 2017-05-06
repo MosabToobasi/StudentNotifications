@@ -175,7 +175,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     }
 
 
-    public  void insertmarkone(int courseid,int studentid,int mark)
+    public  void insertmarkone(int courseid, int studentid, int mark)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
@@ -184,9 +184,19 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(exam1,mark);
         db.execSQL("UPDATE "+studentcourse_table+" SET "+exam1+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
+
+    public  void insertmarkonev2(String courseid, String studentid, String mark)
+    {
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db=this.getWritableDatabase();
+        cv.put(s2_id,studentid);
+        cv.put(course2_id,courseid);
+        cv.put(exam1,mark);
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+exam1+"='"+mark+"' where "+s2_id2+"='"+studentid+"' and "+course2_id+"='"+courseid+"' ");
+    }
     ////insert exam1 for a student
 
-    public  void insertmarktwo(int courseid,int studentid,int mark)
+    public  void insertmarktwo(int courseid, int studentid, int mark)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
@@ -195,15 +205,37 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         cv.put(exam2,mark);
         db.execSQL("UPDATE "+studentcourse_table+" SET "+exam2+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
     }
+
+
+    public  void insertmarktwov2(String courseid, String studentid, String mark)
+    {
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db=this.getWritableDatabase();
+        cv.put(s2_id,studentid);
+        cv.put(course2_id,courseid);
+        cv.put(exam1,mark);
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+exam2+"='"+mark+"' where "+s2_id2+"='"+studentid+"' and "+course2_id+"='"+courseid+"' ");
+    }
     ////insert exam2 for a student
-    public  void insertmarkquizes(int courseid,int studentid,int mark)
+    public  void insertmarkquizes(int courseid, int studentid, int mark)
     {
         ContentValues cv=new ContentValues();
         SQLiteDatabase db=this.getWritableDatabase();
         cv.put(s2_id,studentid);
         cv.put(course2_id,courseid);
         cv.put(quizes,mark);
-        db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"="+mark+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ");
+        db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"='"+mark+"' where "+s2_id2+"='"+studentid+"' and "+course2_id+"='"+courseid+"' ");
+    }
+
+
+    public  void insertmarkquizesv2(String courseid,String studentid, String mark)
+        {
+            ContentValues cv=new ContentValues();
+            SQLiteDatabase db=this.getWritableDatabase();
+            cv.put(s2_id,studentid);
+            cv.put(course2_id,courseid);
+            cv.put(exam1,mark);
+            db.execSQL("UPDATE "+studentcourse_table+" SET "+quizes+"='"+mark+"' where "+s2_id2+"='"+studentid+"' and "+course2_id+"='"+courseid+"' ");
     }
 ////insert quiz for a student
     public ArrayList<String> getcourses()
@@ -227,6 +259,67 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         return arrayList;
 
     }
+
+
+
+    public ArrayList<String> getstudentsnames(String classname,String coursename)
+    {
+
+
+
+       String classid=getclassid(classname);
+        String cid=getcid(coursename);
+
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT s2id FROM "+studentclass_table+","+studentcourse_table+"where studentclasstable.fclassid="+cid+"and studentcoursetable.c2id="+classid+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex("s2id")));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return arrayList;
+
+    }
+    public ArrayList<String> getstudentsid(String classname,String coursename)
+    {
+
+
+
+        String classid=getclassid(classname);
+        String cid=getcid(coursename);
+
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM "+studentclass_table+","+studentcourse_table+" where studentclasstable.fclassid='"+classid+"' and studentcoursetable.c2id='"+cid+"' ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        ArrayList<String> arrayList=new ArrayList<String>();
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    arrayList.add(cursor.getString(cursor.getColumnIndex("s2id")));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return arrayList;
+
+    }
+
+
 ///get course name
     public ArrayList<String> getclasses()
     {
@@ -251,7 +344,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
     }
 ////get class class name
 
-    public  String getcmarksne(int studentid,int courseid)
+    public  String getcmarksne(String studentid, String courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT exam1 from "+studentcourse_table+" where "+s2_id+"="+studentid+" and "+course2_id+"="+courseid+" ";
@@ -274,7 +367,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
 /**/
     }
     ////return exam1
-    public  String getcmarktwo(int studentid,int courseid)
+    public  String getcmarktwo(String studentid, String courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+exam2+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
@@ -294,7 +387,7 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
         }
         return s1;
     }
-    public  String getcmarkquizes(int studentid,int courseid)
+    public  String getcmarkquizes(String studentid, String courseid)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         String selectQuery =  "SELECT "+quizes+" from "+studentcourse_table+" where "+s2_id2+"="+studentid+" and "+course2_id+"="+courseid+" ";
@@ -306,6 +399,113 @@ public class DataBaseHelperahmaddaraghmeh extends SQLiteOpenHelper
             {
                 try {
                     s1 = cursor.getString(cursor.getColumnIndex(quizes));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return s1;
+    }
+
+
+    public  String getclassid(String classname)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+class_id+" from "+class_table+" where "+class_name+"='"+classname+"' ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        String s1="error";
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(class_id));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return s1;
+    }
+
+    public  String getcid(String coursename)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery1 =  "SELECT "+c_id+" from "+course_table+" where "+c_name+"='"+coursename+"' ";
+        Cursor cursor1 =db.rawQuery(selectQuery1,null);
+        String s1="error";
+        if (cursor1.moveToFirst())
+        {
+            do
+            {
+                try {
+                    s1 = cursor1.getString(cursor1.getColumnIndex(c_id));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor1.moveToNext());
+        }
+        return s1;
+    }
+
+    public  String getstudentid(String sname)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+s_id+" from "+student_table+" where "+s_name+"="+sname+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        String s1="error";
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(s_id));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return s1;
+    }
+
+    public  String getstudentnaem(String sid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+s_name+" from "+student_table+" where "+s_id+"='"+sid+"' ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        String s1="error";
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(s_name));
+                }
+                catch (Exception ex){}
+
+
+            }while (cursor.moveToNext());
+        }
+        return s1;
+    }
+
+
+    public  String getscname(String sid)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String selectQuery =  "SELECT "+s_name+" from "+student_table+" where "+s_id+"="+sid+" ";
+        Cursor cursor =db.rawQuery(selectQuery,null);
+        String s1="error";
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                try {
+                    s1 = cursor.getString(cursor.getColumnIndex(s_name));
                 }
                 catch (Exception ex){}
 
